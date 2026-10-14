@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Classified Invitation · CS Batch 2K25</title>
+<style>
+:root{--bg:#14081f;--cy:#ff9ccf;--pk:#d7b8ff;--rd:#ff3d5a;--tx:#dff6ff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 0,#4a1560 0,var(--bg) 65%);color:var(--tx);font-family:"Courier New",ui-monospace,monospace;display:flex;align-items:center;justify-content:center;padding:20px;overflow-x:hidden}
+canvas{position:fixed;inset:0;pointer-events:none}
+#bg{opacity:.45;z-index:0}#cf{z-index:9}
+body:after{content:"";position:fixed;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px),radial-gradient(circle,transparent 55%,rgba(0,0,0,.6));pointer-events:none;z-index:2}
+body.hot:before{content:"";position:fixed;inset:0;box-shadow:inset 0 0 120px var(--rd);animation:hv 1s infinite;z-index:2;pointer-events:none}
+@keyframes hv{50%{opacity:.25}}
+.box{width:100%;max-width:480px;position:relative;z-index:3}
+.screen{display:none}.screen.on{display:block;animation:in .6s}
+@keyframes in{from{opacity:0;transform:translateY(14px) scale(.98)}}
+.term{border:1px solid var(--cy);padding:20px;box-shadow:0 0 35px rgba(255,156,207,.3);background:rgba(20,8,31,.88);min-height:280px}
+.term p{margin:7px 0;color:var(--cy);font-size:14px;min-height:20px}
+.bar{height:8px;border:1px solid var(--cy);margin:10px 0}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cy),var(--pk))}
+.btns{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+button,.btn{font:inherit;color:var(--cy);background:transparent;border:1px solid var(--cy);padding:14px;font-size:15px;cursor:pointer;letter-spacing:1px;text-align:center;text-decoration:none;display:block;transition:.2s;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+button:hover,.btn:hover{box-shadow:0 0 22px var(--cy)}
+.id{--p:0%;background:linear-gradient(90deg,rgba(255,156,207,.45) var(--p),transparent var(--p));touch-action:none}
+.hint{font-size:11px;opacity:.7;margin-top:10px;text-align:center}
+.card{border:1.5px solid var(--cy);padding:26px 22px;background:rgba(20,8,31,.9);box-shadow:0 0 45px rgba(255,156,207,.35),inset 0 0 45px rgba(255,156,207,.08);text-align:center;position:relative}
+.card.hot{border-color:var(--rd);box-shadow:0 0 50px rgba(255,61,90,.5)}
+.card:before,.card:after{content:"";position:absolute;width:20px;height:20px;border:2px solid var(--pk)}
+.card:before{top:-7px;left:-7px;border-right:0;border-bottom:0}.card:after{bottom:-7px;right:-7px;border-left:0;border-top:0}
+.tag{color:var(--rd);font-size:12px;letter-spacing:3px;animation:bl 1.4s infinite}@keyframes bl{50%{opacity:.35}}
+h1{font-family:Impact,"Arial Black",sans-serif;font-size:46px;margin:8px 0 2px;letter-spacing:4px;color:transparent;-webkit-text-stroke:1.5px var(--cy);animation:gl 3s infinite}
+@keyframes gl{0%,90%,100%{text-shadow:0 0 18px rgba(255,156,207,.7)}92%{text-shadow:-4px 0 var(--pk),4px 0 var(--cy);transform:translateX(3px)}95%{text-shadow:4px 0 var(--rd),-4px 0 var(--cy);transform:translateX(-4px)}}
+.sub{color:var(--pk);font-size:15px;margin:0 0 12px}
+.dear{font-size:17px;margin:12px 0 4px}
+.msg{font-size:14px;line-height:1.6;opacity:.92;min-height:150px;text-align:left}
+.ring{position:relative;width:132px;height:132px;margin:10px auto 2px}
+.ring svg{transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:6}
+.ring .bgc{stroke:rgba(255,61,90,.2)}.ring .fg{stroke:var(--rd);stroke-linecap:round;stroke-dasharray:339.3;filter:drop-shadow(0 0 6px var(--rd));transition:stroke-dashoffset 1s linear}
+.timer{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:30px;color:var(--rd);text-shadow:0 0 14px var(--rd);letter-spacing:2px}
+.warn{font-size:12px;color:var(--rd);letter-spacing:2px}
+.row{border-top:1px solid rgba(255,156,207,.35);padding:12px 0;display:flex;flex-direction:column;gap:4px;text-align:left;opacity:0;animation:up .5s forwards;animation-delay:calc(var(--i)*.14s + .4s)}
+@keyframes up{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:none}}
+.row b{color:var(--cy);letter-spacing:3px;font-size:11px}
+.row span{font-size:18px;font-weight:bold;color:#fff;line-height:1.35}.dress{color:var(--pk)!important}
+.notice{border:1.5px dashed var(--rd);color:#ffd0d8;background:rgba(255,61,90,.1);padding:12px;margin-top:14px;font-size:14px;line-height:1.5;animation:pulse 2s infinite}
+.notice b{color:var(--rd);letter-spacing:2px}@keyframes pulse{50%{box-shadow:0 0 20px rgba(255,61,90,.5)}}
+.ok{border-color:var(--pk);color:var(--pk);margin-top:16px;font-weight:bold;animation:glow 1.5s infinite}
+@keyframes glow{50%{box-shadow:0 0 24px var(--pk)}}
+.foot{font-size:11px;opacity:.7;margin-top:14px}
+.stamp{font-family:Impact,sans-serif;font-size:34px;color:#ffd1e8;border:4px solid #ffd1e8;display:inline-block;padding:6px 14px;letter-spacing:3px;transform:rotate(-7deg);animation:st .6s cubic-bezier(.2,2,.4,1) both;text-shadow:0 0 14px #ffd1e8}
+@keyframes st{from{transform:rotate(-7deg) scale(4);opacity:0}}
+.done{font-size:15px;line-height:1.7;margin-top:18px}
+#fl{position:fixed;inset:0;z-index:8;display:none;align-items:center;justify-content:center;font-family:Impact,sans-serif;font-size:38px;letter-spacing:5px;text-align:center}
+.boom{animation:boom 1.3s forwards}
+@keyframes boom{0%{transform:none}20%{transform:translate(10px,-6px) skewX(10deg);filter:hue-rotate(90deg)}45%{transform:translate(-14px,5px) skewX(-12deg);filter:invert(1)}70%{transform:translate(8px,2px) scale(1.05);opacity:.5}100%{opacity:0;filter:blur(12px);transform:scale(1.3)}}
+.card,.term{border-radius:20px}button,.btn,.notice,.bar,.bar i{border-radius:14px}.card:before,.card:after{display:none}
+#code{width:100%;background:transparent;border:1px solid var(--cy);color:#fff;font:inherit;font-size:28px;text-align:center;letter-spacing:12px;padding:12px;border-radius:14px;margin:12px 0 4px;outline:none}
+#back{border:0;font-size:12px;opacity:.7;margin-top:6px;width:100%}
+.sig{margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,156,207,.4);text-align:center}
+.jk{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-weight:bold;font-size:27px;line-height:1.25;color:#ffd1e8;text-shadow:0 0 18px #ff3d5a,0 0 6px #ff9ccf}
+.by{margin-top:10px;font-size:17px;font-weight:bold;letter-spacing:4px;color:#ff5c8a;text-transform:uppercase}
+.row span,.row b{display:inline-block;transition:transform .2s ease,text-shadow .2s;transform-origin:left center}
+.row:hover span{transform:scale(1.07);text-shadow:0 0 14px rgba(255,156,207,.7)}
+.dear,.sub,.msg,.notice,.foot,.sig,.warn{transition:transform .2s ease}
+.dear:hover,.sub:hover,.foot:hover,.warn:hover{transform:scale(1.05)}
+.msg:hover,.notice:hover{transform:scale(1.025)}
+.sig:hover{transform:scale(1.05)}
+.card .ok:hover{transform:scale(1.03)}
+</style></head><body>
+<canvas id="bg"></canvas><canvas id="cf"></canvas><div id="fl"></div>
+<button id="mute" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);right:10px;width:auto;padding:6px 10px;z-index:10;background:rgba(20,8,31,.8)">🔊</button>
+<div class="box">
+
+<div class="screen on" id="s0"><div class="term" style="text-align:center;display:flex;flex-direction:column;justify-content:center">
+<p>1 ENCRYPTED MESSAGE WAITING</p>
+<div class="btns"><button id="start" class="ok">▶ TAP TO RECEIVE TRANSMISSION</button></div><p class="hint">🔊 Sound on for the full experience</p></div></div>
+
+<div class="screen" id="s1"><div class="term">
+<p id="l1"></p><div class="bar"><i id="pb"></i></div><p id="l2"></p><p id="l3"></p>
+<div class="btns" id="who" style="display:none">
+<button class="id" data-n="Ms Zoha">MS ZOHA</button>
+<button class="id" data-n="Ms Sajida">MS SAJIDA</button>
+<button class="id" data-n="Ms Samra">MS SAMRA</button>
+<div class="hint">PRESS AND HOLD YOUR NAME TO SCAN</div></div>
+<div id="codebox" style="display:none"><input id="code" type="tel" inputmode="numeric" maxlength="4" placeholder="••••" autocomplete="off"><button id="unlock" class="ok" style="width:100%">UNLOCK</button><button id="back">← not you? go back</button></div>
+</div></div>
+
+<div class="screen" id="s2"><div class="card" id="card">
+<div class="tag">● TOP SECRET · EYES ONLY</div>
+<h1>INVITATION</h1>
+<p class="sub">CS Batch 2K25 · Welcome Party</p>
+<div class="dear">Assalam-o-Alaikum <span id="nm"></span>,</div>
+<p class="msg" id="msg"></p>
+<div class="warn">THIS INVITATION WILL SELF-DESTRUCT IN</div>
+<div class="ring"><svg width="132" height="132"><circle class="bgc" cx="66" cy="66" r="54"/><circle class="fg" id="fg" cx="66" cy="66" r="54"/></svg><div class="timer" id="t">02:00</div></div>
+<div class="row" style="--i:0"><b>DATE</b><span>Friday, 23 Oct 2026</span></div>
+<div class="row" style="--i:1"><b>TIME</b><span>1:00 – 2:30 PM</span></div>
+<div class="row" style="--i:2"><b>LOCATION</b><span>Second Floor Hall</span></div>
+<div class="row" style="--i:3"><b>DRESS CODE</b><span><i style="color:#ff9ccf;font-style:normal">Pink</i> &amp; <i style="color:#ff3d5a;font-style:normal">Red</i></span></div>
+<div class="row" style="--i:4"><b>ON THE MENU</b><span>Lunch · Islamic session · Games</span></div>
+<div class="row" style="--i:5"><b>RSVP BY</b><span>Mon, 19 Oct 2026</span></div>
+<div class="notice"><b>⚠ IMPORTANT</b><br>Please read every detail above thoroughly before confirming your presence.</div>
+<a class="btn ok" id="rsvp" target="_blank" rel="noopener">⏹ ABORT SELF-DESTRUCT · CONFIRM PRESENCE</a>
+<p class="foot">Screenshot this and send it to the event lead, or tap above. Presence confirmed, self-destruct stopped.</p>
+<div class="sig"><div class="jk">Jazakumullahu Kheiran Kaseera</div><div class="by">— By Batch 2K25</div></div>
+</div></div>
+
+<div class="screen" id="s3"><div class="card"><div style="text-align:center" id="end"></div>
+<button class="ok" id="again" style="width:100%;margin-top:18px">↻ REPLAY TRANSMISSION</button></div></div>
+</div>
+<script>
+var $=function(i){return document.getElementById(i)},name="",iv,left=120,TOT=120,NUM="923008206876",AC,muted=false;
+function ac(){if(!AC){var C=window.AudioContext||window.webkitAudioContext;if(C)AC=new C()}if(AC&&AC.state==="suspended")AC.resume();return AC}
+function tone(f,d,ty,v,t0,f2){if(muted)return;var a=ac();if(!a)return;var t=a.currentTime+(t0||0),o=a.createOscillator(),g=a.createGain();o.type=ty||"square";o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+d);g.gain.setValueAtTime(v||.05,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+d)}
+function noise(d,v){if(muted)return;var a=ac();if(!a)return;var n=Math.floor(a.sampleRate*d),b=a.createBuffer(1,n,a.sampleRate),x=b.getChannelData(0);for(var i=0;i<n;i++)x[i]=(Math.random()*2-1)*(1-i/n);var s=a.createBufferSource(),g=a.createGain(),f=a.createBiquadFilter();f.type="lowpass";f.frequency.value=900;s.buffer=b;g.gain.value=v||.4;s.connect(f);f.connect(g);g.connect(a.destination);s.start()}
+var sfx={blip:function(){tone(1100+Math.random()*300,.02,"square",.015)},tick:function(){tone(900,.03,"square",.02)},alarm:function(){tone(1600,.12,"square",.05)},boom:function(){noise(1.4,.9);tone(140,1,"sawtooth",.18,0,30);tone(90,.7,"square",.08,.1,20)},ok:function(){[523,659,784,1047].forEach(function(f,i){tone(f,.35,"sine",.08,i*.12)})},boot:function(){tone(200,.6,"sawtooth",.04,0,900)},grant:function(){tone(600,.15,"square",.05);tone(900,.15,"square",.05,.15);tone(1400,.4,"square",.05,.3)}};
+function show(i){["s0","s1","s2","s3"].forEach(function(s){$(s).classList.toggle("on",s===i)})}
+function type(el,txt,cb,sp){var i=0;(function f(){if(i%2===0)sfx.blip();el.textContent=txt.slice(0,i++)+(i<=txt.length?"█":"");if(i<=txt.length)setTimeout(f,sp||26);else{el.textContent=txt;cb&&cb()}})()}
+function flash(txt,col,bg,ms,cb){var f=$("fl");f.textContent=txt;f.style.color=col;f.style.background=bg;f.style.display="flex";setTimeout(function(){f.style.display="none";cb&&cb()},ms)}
+/* matrix rain */
+var cv=$("bg"),cx=cv.getContext("2d"),dr=[],CH="01{}<>/;=()$#&AI♡✦";
+function rs(){cv.width=innerWidth;cv.height=innerHeight;dr=[];for(var i=0;i<Math.floor(cv.width/16);i++)dr[i]=Math.random()*-60}rs();addEventListener("resize",rs);
+setInterval(function(){cx.fillStyle="rgba(20,8,31,.13)";cx.fillRect(0,0,cv.width,cv.height);cx.font="14px monospace";for(var i=0;i<dr.length;i++){cx.fillStyle=i%11===0?"#d7b8ff":"#ff9ccf";cx.fillText(CH[Math.floor(Math.random()*CH.length)],i*16,dr[i]*16);if(dr[i]*16>cv.height&&Math.random()>.975)dr[i]=0;dr[i]++}},55);
+/* confetti */
+var cf=$("cf"),cc=cf.getContext("2d"),ps=[];
+function boomConfetti(){cf.width=innerWidth;cf.height=innerHeight;var C=["#ffb3d1","#ff7eb6","#ff3d5a","#ff9ccf","#e8164a","#ff5c8a"];ps=[];for(var i=0;i<240;i++)ps.push({x:innerWidth/2,y:innerHeight*.55,vx:(Math.random()-.5)*16,vy:-Math.random()*17-3,r:Math.random()*6,s:Math.random()*8+4,c:C[i%6],a:1});(function f(){cc.clearRect(0,0,cf.width,cf.height);var live=0;ps.forEach(function(p){p.vy+=.4;p.x+=p.vx;p.y+=p.vy;p.r+=.2;p.a-=.006;if(p.a>0&&p.y<cf.height+20){live++;cc.save();cc.globalAlpha=p.a;cc.translate(p.x,p.y);cc.rotate(p.r);cc.fillStyle=p.c;cc.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);cc.restore()}});if(live)requestAnimationFrame(f);else cc.clearRect(0,0,cf.width,cf.height)})()}
+/* flow */
+function link(){return "https://wa.me/"+NUM+"?text="+encodeURIComponent("Presence confirmed. "+name+" will attend the CS Batch 2K25 Welcome Party on 23 Oct, 1:00 PM. Self-destruct stopped.")}
+function boot(){show("s1");clearInterval(iv);document.body.classList.remove("hot");$("who").style.display="none";$("codebox").style.display="none";["l1","l2","l3"].forEach(function(x){$(x).textContent=""});$("pb").style.width="0";
+type($("l1"),"> INCOMING ENCRYPTED TRANSMISSION... DECRYPTING",function(){var p=0,t=setInterval(function(){p+=3+Math.random()*5;if(p>=100){p=100;clearInterval(t);type($("l2"),"> SOURCE VERIFIED: CS BATCH 2K25",function(){type($("l3"),"> AUTHENTICATE TO OPEN:",function(){$("who").style.display="flex"})})}$("pb").style.width=p+"%";tone(300+p*8,.03,"square",.02)},60)})}
+function tick(){if(left>0&&left<=10)sfx.alarm();else if(left>0)sfx.tick();var m=Math.floor(left/60),s=left%60;$("t").textContent=(m<10?"0":"")+m+":"+(s<10?"0":"")+s;$("fg").style.strokeDashoffset=339.3*(1-left/TOT);
+if(left===30){$("card").classList.add("hot");document.body.classList.add("hot")}
+if(left--<=0){clearInterval(iv);document.body.classList.remove("hot");$("card").classList.add("boom");sfx.boom();setTimeout(function(){flash("","#fff","#fff",150,function(){$("end").innerHTML='<div style="font-size:54px">💥</div><div class="done">Invitation destroyed.<br>Just kidding. The party is still on <b style="color:#fff">Friday 23 Oct, 1:00 PM</b>, second floor hall.<br>Please RSVP by Monday 19 Oct.<br><br><a class="btn ok" target="_blank" rel="noopener" href="'+link()+'">CONFIRM PRESENCE ON WHATSAPP</a></div>';show("s3")})},1000)}}
+var CODES={"Ms Zoha":"4821","Ms Sajida":"7305","Ms Samra":"1964"};
+function askCode(n){name=n;sfx.grant();$("who").style.display="none";$("codebox").style.display="block";$("code").value="";type($("l3"),"> "+n.toUpperCase()+", ENTER YOUR PRIVATE ACCESS CODE:",function(){$("code").focus()})}
+function unlock(){if($("code").value===CODES[name]){$("codebox").style.display="none";grant(name)}else{tone(120,.45,"sawtooth",.08);flash("ACCESS DENIED","#fff","rgba(130,0,30,.92)",900);$("code").value=""}}
+function grant(n){name=n;sfx.grant();flash("ACCESS GRANTED","#ffd1e8","rgba(60,10,50,.92)",1100,function(){$("nm").textContent=name;$("rsvp").href=link();$("card").className="card";left=TOT;$("fg").style.strokeDashoffset=0;show("s2");type($("msg"),"Every great batch begins with great teachers, and much of who we are as CS students comes from your guidance. As we welcome our juniors, we would be truly honoured to have you with us as our guest. Please join us for lunch, a short Islamic session and some good-natured games. Your presence would mean a great deal to us.",null,14);clearInterval(iv);tick();iv=setInterval(tick,1000)})}
+document.querySelectorAll(".id").forEach(function(b){var t,st;function stop(){clearInterval(t);b.style.setProperty("--p","0%")}
+b.addEventListener("pointerdown",function(e){e.preventDefault();ac();st=Date.now();clearInterval(t);t=setInterval(function(){var p=Math.min((Date.now()-st)/1200,1);b.style.setProperty("--p",p*100+"%");tone(300+p*1000,.05,"sine",.03);if(p>=1){stop();askCode(b.dataset.n)}},40)});
+["pointerup","pointerleave","pointercancel"].forEach(function(ev){b.addEventListener(ev,stop)});b.addEventListener("contextmenu",function(e){e.preventDefault()})});
+$("rsvp").addEventListener("click",function(){clearInterval(iv);document.body.classList.remove("hot");sfx.ok();boomConfetti();$("end").innerHTML='<div class="stamp">PRESENCE CONFIRMED</div><div class="done">Self-destruct aborted. Thank you, <b style="color:#fff">'+name+'</b>!<br>See you Friday 23 Oct, 1:00 PM, second floor hall.<br><span style="color:var(--pk)">Dress code: Pink &amp; Red.</span></div><div class="sig"><div class="jk">Jazakumullahu Kheiran Kaseera</div><div class="by">— By Batch 2K25</div></div>';show("s3")});
+
+$("unlock").onclick=unlock;$("code").addEventListener("keydown",function(e){if(e.key==="Enter")unlock()});$("back").onclick=function(){$("codebox").style.display="none";$("l3").textContent="> AUTHENTICATE TO OPEN:";$("who").style.display="flex"};$("again").onclick=boot;$("start").onclick=function(){ac();sfx.boot();boot()};
+$("mute").onclick=function(){muted=!muted;$("mute").textContent=muted?"🔇":"🔊"};
+</script></body></html>
